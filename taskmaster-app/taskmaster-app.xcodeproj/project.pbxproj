@@ -11,7 +11,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		4D7B5FC62F5D4DBF00A30DF7 /* Exceptions for "taskmaster-app" folder in "taskmaster-app" target */ = {
+		4D7B603A2F5D808600A30DF7 /* Exceptions for "taskmaster-app" folder in "taskmaster-app" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -21,10 +21,10 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		4D7B5FB62F5D4DBD00A30DF7 /* taskmaster-app */ = {
+		4D7B60252F5D5A7000A30DF7 /* taskmaster-app */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				4D7B5FC62F5D4DBF00A30DF7 /* Exceptions for "taskmaster-app" folder in "taskmaster-app" target */,
+				4D7B603A2F5D808600A30DF7 /* Exceptions for "taskmaster-app" folder in "taskmaster-app" target */,
 			);
 			path = "taskmaster-app";
 			sourceTree = "<group>";
@@ -45,7 +45,7 @@
 		4D7B5FAB2F5D4DBD00A30DF7 = {
 			isa = PBXGroup;
 			children = (
-				4D7B5FB62F5D4DBD00A30DF7 /* taskmaster-app */,
+				4D7B60252F5D5A7000A30DF7 /* taskmaster-app */,
 				4D7B5FB52F5D4DBD00A30DF7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -74,7 +74,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				4D7B5FB62F5D4DBD00A30DF7 /* taskmaster-app */,
+				4D7B60252F5D5A7000A30DF7 /* taskmaster-app */,
 			);
 			name = "taskmaster-app";
 			packageProductDependencies = (
