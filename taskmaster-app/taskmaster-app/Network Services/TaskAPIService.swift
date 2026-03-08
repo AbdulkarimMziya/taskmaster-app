@@ -19,7 +19,7 @@ class TaskAPIService {
         
         // 2. Validate url
         guard let url = urlComponent.url else {
-            NetworkError.invalidURL(urlComponent.string ?? "")
+            throw NetworkError.invalidURL(urlComponent.string ?? "")
         }
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = "GET"
@@ -29,16 +29,13 @@ class TaskAPIService {
         
         // 4. Decode the data
         var tasks = [Task]()
-        var taskResponse: taskResponse
         do {
             let decoder = JSONDecoder()
-            taskResponse = decoder.decode([Task].self, from: data)
+            tasks = try decoder.decode([Task].self, from: data)
         } catch {
             throw NetworkError.decodeError(error)
         }
-        
-        // TODO: assign decoded data to tasks array
-        
+ 
         return tasks
     }
 }
