@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Task: Identifiable, Codable {
+struct TodoTask: Identifiable, Codable {
     let id: String
     let title: String
     let isCompleted: Bool

@@ -10,11 +10,12 @@ import Foundation
 class TaskAPIService {
     
     // Get all Tasks
-    static func fetchAllTasks() async throws -> [Task] {
+    static func fetchAllTasks() async throws -> [TodoTask] {
         // 1. Create url component
         var urlComponent = URLComponents()
         urlComponent.scheme = "http"
-        urlComponent.host = "localhost:4000"
+        urlComponent.host = "localhost"
+        urlComponent.port = 4000
         urlComponent.path = "/api/tasks"
         
         // 2. Validate url
@@ -28,10 +29,10 @@ class TaskAPIService {
         let data = try await NetworkHelper.shared.performTask(with: urlRequest)
         
         // 4. Decode the data
-        var tasks = [Task]()
+        var tasks = [TodoTask]()
         do {
             let decoder = JSONDecoder()
-            tasks = try decoder.decode([Task].self, from: data)
+            tasks = try decoder.decode([TodoTask].self, from: data)
         } catch {
             throw NetworkError.decodeError(error)
         }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-actor NetworkHelper {
+class NetworkHelper {
     
     static let shared = NetworkHelper()
     

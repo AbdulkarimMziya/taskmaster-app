@@ -10,9 +10,22 @@
 		4D7B5FB42F5D4DBD00A30DF7 /* taskmaster-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "taskmaster-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		4D7B603A2F5D808600A30DF7 /* Exceptions for "taskmaster-app" folder in "taskmaster-app" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 4D7B5FB32F5D4DBD00A30DF7 /* taskmaster-app */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		4D7B60252F5D5A7000A30DF7 /* taskmaster-app */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				4D7B603A2F5D808600A30DF7 /* Exceptions for "taskmaster-app" folder in "taskmaster-app" target */,
+			);
 			path = "taskmaster-app";
 			sourceTree = "<group>";
 		};
