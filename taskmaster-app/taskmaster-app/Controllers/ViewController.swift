@@ -24,15 +24,29 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Tasks"
+        navigationController?.navigationBar.prefersLargeTitles = true
         
+        // Setup Add Button
+        let addButton = UIBarButtonItem(image: UIImage(systemName: "plus"),
+                                        style: .plain,
+                                        target: self,
+                                        action: #selector(didTapAdd))
+        navigationItem.rightBarButtonItem = addButton
+        
+        // Setup Table
         view.addSubview(tableView)
         tableView.frame = view.bounds
-        
         tableView.dataSource = self
-        loadData()
         
+        loadData()
     }
-   
+
+    @objc
+    private func didTapAdd() {
+        print("Plus button tapped! Time to show a UIAlertController to create a task.")
+    }
+
     func loadData() {
             Task {
                 do {
