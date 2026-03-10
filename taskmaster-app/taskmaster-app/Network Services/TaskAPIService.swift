@@ -49,7 +49,7 @@ class TaskAPIService {
     }
     
     
-    static func performTaskRequest(for httpMethod: HTTPMethod, id: String?) async throws -> TodoTask {
+    static func performTaskRequest(for httpMethod: HTTPMethod, id: String?, task: TodoTask?) async throws -> TodoTask {
         
         var urlComponent = URLComponents()
         urlComponent.scheme = "http"
@@ -67,6 +67,19 @@ class TaskAPIService {
         }
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = httpMethod.rawValue
+        
+        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        if let task = task {
+            
+            do {
+                let encoder = JSONEncoder()
+                urlRequest.httpBody = try encoder.encode(task)
+            }catch {
+               throw NetworkError.encodeError(error)
+            }
+            
+        }
         
         let data = try await NetworkHelper.shared.performTask(with: urlRequest)
         
