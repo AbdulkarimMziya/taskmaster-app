@@ -14,14 +14,22 @@ extension ViewController: UITableViewDelegate {
         // 1. Define the action
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (action, view, completionHandler) in
             
-            // TODO: Handle deletion request
+            let id = self.todoTasks[indexPath.row].id
+            
+            // perform asyn action to remove TodoTask
+            Task {
+                do {
+                    let data = try await TaskAPIService.performTaskRequest(for: .delete, id: "\(id)")
+                    
+                    DispatchQueue.main.async {
+                        self.todoTasks.remove(at: indexPath.row)
+                        completionHandler(true)
+                        dump(data)
+                    }
+                }
+                
+            }
             print("Delete tapped")
-            
-            // TODO: Update todoTasks
-            // Update data source (e.g., array.remove(at: indexPath.row))
-            // tableView.deleteRows(at: [indexPath], with: .automatic)
-            
-            completionHandler(true) // Pass true if action was performed
         }
         
         // Customize action
