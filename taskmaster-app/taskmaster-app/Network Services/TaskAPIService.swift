@@ -9,6 +9,14 @@ import Foundation
 
 class TaskAPIService {
     
+    enum HTTPMethod: String {
+        case put = "PUT"
+        case post = "POST"
+        case delete = "DELETE"
+        case get = "GET"
+    }
+
+    
     // Get all Tasks
     static func fetchAllTasks() async throws -> [TodoTask] {
         // 1. Create url component
@@ -38,5 +46,35 @@ class TaskAPIService {
         }
  
         return tasks
+    }
+    
+    
+    static func performTaskRequest(for httpMethod: HTTPMethod, id: String?) async throws -> TodoTask {
+        
+        var urlComponent = URLComponents()
+        urlComponent.scheme = "http"
+        urlComponent.host = "localhost"
+        urlComponent.port = 4000
+        
+        if let taskID = id {
+            urlComponent.path = "/api/task/\(taskID)"
+        } else {
+            urlComponent.path = "/api/task"
+        }
+        
+        guard let url = urlComponent.url else {
+            throw NetworkError.invalidURL(urlComponent.string ?? "")
+        }
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = httpMethod.rawValue
+        
+        let data = try await NetworkHelper.shared.performTask(with: urlRequest)
+        
+        do {
+            let decoder = JSONDecoder()
+            return try decoder.decode(TodoTask.self, from: data)
+        } catch {
+            throw NetworkError.decodeError(error)
+        }
     }
 }
