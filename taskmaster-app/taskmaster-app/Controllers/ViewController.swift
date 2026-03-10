@@ -38,6 +38,7 @@ class ViewController: UIViewController {
         view.addSubview(tableView)
         tableView.frame = view.bounds
         tableView.dataSource = self
+        tableView.delegate = self
         
         loadData()
     }
