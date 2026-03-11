@@ -1,6 +1,7 @@
 <p align="center">
-   <img src="https://github.com/AbdulkarimMziya/taskmaster-app/blob/main/images/RemainderAppDemo.gif" alt="Taskmaster Demo" width="150"/> 
+   <img src="https://github.com/AbdulkarimMziya/AbdulkarimMziya/blob/main/images/RemainderAppDemo.gif" alt="Taskmaster Demo" width="150"/> 
 </p>
+
 
 # TaskMaster
 
