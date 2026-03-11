@@ -13,6 +13,7 @@ extension ViewController: UITableViewDelegate {
         
         let task = todoTasks[indexPath.row]
         let editVC = TaskDetailViewController(mode: .edit(task))
+        editVC.delegate = self
         let navController = UINavigationController(rootViewController: editVC)
         present(navController, animated: true)
     }
@@ -22,22 +23,27 @@ extension ViewController: UITableViewDelegate {
         // 1. Define the action
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (action, view, completionHandler) in
             
-            let id = self.todoTasks[indexPath.row].id
+            guard let id = self.todoTasks[indexPath.row].id else {
+                completionHandler(false)
+                return
+            }
             
             // perform asyn action to remove TodoTask
             Task {
                 do {
-                    let data = try await TaskAPIService.performTaskRequest(for: .delete, id: "\(id)", task: nil)
+                    let data = try await TaskAPIService.deleteTask(id: id)
                     
-                    DispatchQueue.main.async {
+                    await MainActor.run {
                         self.todoTasks.remove(at: indexPath.row)
                         completionHandler(true)
                         dump(data)
                     }
+                } catch {
+                    completionHandler(false)
+                    print(error)
                 }
                 
             }
-            print("Delete tapped")
         }
         
         // Customize action
