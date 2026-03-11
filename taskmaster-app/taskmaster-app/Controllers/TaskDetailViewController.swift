@@ -9,6 +9,8 @@ import UIKit
 
 class TaskDetailViewController: UIViewController {
     
+    weak var delegate: TaskDetailDelegate?
+    
     enum Mode {
         case add
         case edit(TodoTask)
@@ -97,14 +99,42 @@ class TaskDetailViewController: UIViewController {
             barButtonSystemItem: .done, target: self, action: #selector(didTapDone))
     }
     
-    @objc private func didTapCancel() {
+    @objc
+    private func didTapCancel() {
         
         dismiss(animated: true)
     }
     
-    @objc private func didTapDone() {
-        // TODO: Logic to call your TaskAPIService will go here
-        dismiss(animated: true)
+    @objc
+    private func didTapDone() {
+        guard let title = titleTextField.text, !title.isEmpty else {
+            dismiss(animated: true)
+            return
+        }
+
+        let isCompleted = statusSwitch.isOn
+
+        Task {
+            do {
+                switch mode {
+                case .add:
+                    let newTask = TodoTask(id: nil, title: title, isCompleted: isCompleted)
+                    _ = try await TaskAPIService.createTask(newTask)
+
+                case .edit(let existingTask):
+                    let updatedTask = TodoTask(id: existingTask.id, title: title, isCompleted: isCompleted)
+                    guard let id = existingTask.id else { return }
+                    _ = try await TaskAPIService.updateTask(id: id, task: updatedTask)
+                }
+
+                await MainActor.run {
+                    delegate?.didSaveTask()
+                    dismiss(animated: true)
+                }
+            } catch {
+                print(error)
+            }
+        }
     }
 }
 
