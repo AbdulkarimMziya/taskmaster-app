@@ -6,3 +6,10 @@
 //
 
 import Foundation
+
+extension ViewController: TaskDetailDelegate {
+    func didSaveTask() {
+        self.loadData()
+    }
+    
+}
