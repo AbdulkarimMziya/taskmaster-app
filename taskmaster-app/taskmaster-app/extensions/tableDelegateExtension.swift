@@ -9,6 +9,14 @@ import UIKit
 
 extension ViewController: UITableViewDelegate {
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let task = todoTasks[indexPath.row]
+        let editVC = TaskDetailViewController(mode: .edit(task))
+        let navController = UINavigationController(rootViewController: editVC)
+        present(navController, animated: true)
+    }
+    
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         
         // 1. Define the action
@@ -19,7 +27,7 @@ extension ViewController: UITableViewDelegate {
             // perform asyn action to remove TodoTask
             Task {
                 do {
-                    let data = try await TaskAPIService.performTaskRequest(for: .delete, id: "\(id)")
+                    let data = try await TaskAPIService.performTaskRequest(for: .delete, id: "\(id)", task: nil)
                     
                     DispatchQueue.main.async {
                         self.todoTasks.remove(at: indexPath.row)
