@@ -45,22 +45,24 @@ class ViewController: UIViewController {
 
     @objc
     private func didTapAdd() {
-        print("Plus button tapped! Time to show a UIAlertController to create a task.")
+        let detailVC = TaskDetailViewController(mode: .add)
+        let navController = UINavigationController(rootViewController: detailVC)
+        present(navController, animated: true)
     }
 
     func loadData() {
-            Task {
-                do {
-                    // 2. Assign the result to your local array
-                    self.todoTasks = try await TaskAPIService.fetchAllTasks()
-                    
-                    // 3. Test by printing the count and dumping the first item
-                    print("Successfully fetched \(self.todoTasks.count) tasks.")
-                } catch {
-                    print("Network Error: \(error)")
-                }
+        Task {
+            do {
+                // 2. Assign the result to your local array
+                self.todoTasks = try await TaskAPIService.fetchAllTasks()
+                
+                // 3. Test by printing the count and dumping the first item
+                print("Successfully fetched \(self.todoTasks.count) tasks.")
+            } catch {
+                print("Network Error: \(error)")
             }
         }
+    }
 
 }
 
