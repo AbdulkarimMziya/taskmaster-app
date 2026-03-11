@@ -8,7 +8,7 @@
 import Foundation
 
 struct TodoTask: Identifiable, Codable {
-    let id: String
+    let id: String?
     let title: String
     let isCompleted: Bool
 
