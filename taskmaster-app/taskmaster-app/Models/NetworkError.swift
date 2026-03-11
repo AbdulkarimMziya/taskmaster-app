@@ -12,4 +12,5 @@ enum NetworkError: Error {
     case badStatusCode(Int)
     case invalidURL(String)
     case decodeError(Error)
+    case encodeError(Error)
 }

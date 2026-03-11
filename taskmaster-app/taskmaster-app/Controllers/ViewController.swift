@@ -9,31 +9,64 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    var tasks = [TodoTask]()
-    
+    private let tableView: UITableView = {
+        let tb = UITableView()
+        tb.register(UITableViewCell.self, forCellReuseIdentifier: "TodoCell")
+        tb.translatesAutoresizingMaskIntoConstraints = false
+        return tb
+    }()
+
+    var todoTasks = [TodoTask]() {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        
-        
+        title = "Tasks"
+        navigationController?.navigationBar.prefersLargeTitles = true
+        setupUI()
+        loadData()
     }
-   
+
+    private func setupUI() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            image: UIImage(systemName: "plus"),
+            style: .plain,
+            target: self,
+            action: #selector(didTapAdd)
+        )
+
+        view.addSubview(tableView)
+        tableView.dataSource = self
+        tableView.delegate = self
+
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
+    }
+
+    @objc
+    private func didTapAdd() {
+        let detailVC = TaskDetailViewController(mode: .add)
+        detailVC.delegate = self
+        present(UINavigationController(rootViewController: detailVC), animated: true)
+    }
+
     func loadData() {
-            Task {
-                do {
-                    // 2. Assign the result to your local array
-                    self.tasks = try await TaskAPIService.fetchAllTasks()
-                    
-                    // 3. Test by printing the count and dumping the first item
-                    print("Successfully fetched \(self.tasks.count) tasks.")
-                    if let firstTask = self.tasks.first {
-                        dump(firstTask)
-                    }
-                } catch {
-                    print("Network Error: \(error)")
+        Task {
+            do {
+                let tasks = try await TaskAPIService.fetchAllTasks()
+                await MainActor.run {
+                    self.todoTasks = tasks
                 }
+            } catch {
+                print("Network Error: \(error)")
             }
         }
-
+    }
 }
-
