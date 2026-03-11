@@ -1,3 +1,7 @@
+<p align="center">
+   <img src="https://github.com/AbdulkarimMziya/taskmaster-app/blob/main/images/RemainderAppDemo.gif" alt="Taskmaster Demo" width="150"/> 
+</p>
+
 # TaskMaster
 
 A simple iOS task management app built with Swift and UIKit that lets you create, edit, and delete tasks via a custom REST API.
